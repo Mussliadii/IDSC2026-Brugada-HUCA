@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">🫀 BrugadaAI — Brugada Syndrome ECG Classification</h1>
   <p align="center">
-    Sistem Klasifikasi Sindrom Brugada Berbasis Kecerdasan Buatan<br>
+    AI-Based Brugada Syndrome Classification System<br>
     <em>AI-powered Brugada Syndrome Screening from 12-Lead ECG</em>
   </p>
 </p>
@@ -16,57 +16,57 @@
 
 ---
 
-## 📋 Daftar Isi
+## 📋 Table of Contents
 
-- [Tentang Proyek](#-tentang-proyek)
-- [Tentang Sindrom Brugada](#-tentang-sindrom-brugada)
+- [About the Project](#-about-the-project)
+- [About Brugada Syndrome](#-about-brugada-syndrome)
 - [Dataset](#-dataset)
-- [Arsitektur Model](#-arsitektur-model)
-- [Hasil & Performa](#-hasil--performa)
-- [Struktur File](#-struktur-file)
-- [Instalasi & Setup](#-instalasi--setup)
-- [Cara Menjalankan Streamlit](#-cara-menjalankan-streamlit)
-- [Panduan Penggunaan Streamlit](#-panduan-penggunaan-streamlit)
-- [Teknologi yang Digunakan](#-teknologi-yang-digunakan)
+- [Model Architecture](#-model-architecture)
+- [Results & Performance](#-results--performance)
+- [File Structure](#-file-structure)
+- [Installation & Setup](#-installation--setup)
+- [Running the Streamlit App](#-running-the-streamlit-app)
+- [Streamlit Usage Guide](#-streamlit-usage-guide)
+- [Technologies Used](#-technologies-used)
 - [Disclaimer](#️-disclaimer)
 
 ---
 
-## 🧬 Tentang Proyek
+## 🧬 About the Project
 
-**BrugadaAI** adalah sistem skrining otomatis untuk mendeteksi **Sindrom Brugada** dari rekaman EKG (Elektrokardiografi) 12-lead. Proyek ini menggabungkan pendekatan **Deep Learning (CNN 1D)** dan **Classical Machine Learning (XGBoost)** untuk memberikan prediksi yang robust dan dapat diinterpretasi.
+**BrugadaAI** is an automated screening system for detecting **Brugada Syndrome** from 12-lead ECG (Electrocardiography) recordings. This project combines **Deep Learning (1D CNN)** and **Classical Machine Learning (XGBoost)** approaches to provide robust and interpretable predictions.
 
-Sistem ini dilengkapi dengan **aplikasi web interaktif berbasis Streamlit** yang dirancang dengan tampilan kedokteran, memungkinkan pengguna untuk:
-- Upload dan menganalisis rekaman EKG dalam format WFDB
-- Mendapatkan prediksi dari 4 model sekaligus (ensemble multi-model)
-- Memvisualisasikan sinyal EKG 12-lead secara interaktif
-- Mengunduh laporan klinis hasil skrining
+The system includes an **interactive Streamlit-based web application** designed with a medical interface, allowing users to:
+- Upload and analyze ECG recordings in WFDB format
+- Obtain predictions from 4 models simultaneously (multi-model ensemble)
+- Interactively visualize 12-lead ECG signals
+- Download clinical screening reports
 
-> **Konteks:** Proyek ini dibuat untuk kompetisi **IIDSC 2026** (Indonesia International Data Science Competition).
+> **Context:** This project was built for the **IIDSC 2026** (Indonesia International Data Science Competition).
 
 ---
 
-## 🫀 Tentang Sindrom Brugada
+## 🫀 About Brugada Syndrome
 
-**Sindrom Brugada** adalah kelainan irama jantung (aritmia) genetik yang jarang namun berpotensi mengancam jiwa. Sindrom ini ditandai oleh:
+**Brugada Syndrome** is a rare but potentially life-threatening genetic cardiac arrhythmia disorder. It is characterized by:
 
-- **ST-segment elevation** tipe *coved* pada lead precordial kanan (**V1–V3**)
-- Sering disertai pola *right bundle branch block* (RBBB)
-- Peningkatan risiko **kematian jantung mendadak** (*sudden cardiac death*)
+- **ST-segment elevation** with a *coved* pattern in the right precordial leads (**V1–V3**)
+- Often accompanied by a *right bundle branch block* (RBBB) pattern
+- Increased risk of **sudden cardiac death** (SCD)
 
-### Fakta Penting
-| Parameter | Nilai |
+### Key Facts
+| Parameter | Value |
 |-----------|-------|
-| Prevalensi | ~1–5 per 10.000 orang |
-| Rasio Pria:Wanita | 8–10 : 1 |
-| Onset gejala rata-rata | ~40 tahun |
-| Kontribusi ke SCD | 4–12% kematian jantung mendadak |
+| Prevalence | ~1–5 per 10,000 people |
+| Male:Female Ratio | 8–10 : 1 |
+| Average symptom onset | ~40 years |
+| Contribution to SCD | 4–12% of sudden cardiac deaths |
 
-### Kriteria Diagnosis
-1. Pola EKG karakteristik (spontan atau drug-induced)
-2. Riwayat sinkop (pingsan)
-3. Aritmia ventrikuler yang terdokumentasi
-4. Riwayat keluarga dengan kematian jantung mendadak
+### Diagnostic Criteria
+1. Characteristic ECG pattern (spontaneous or drug-induced)
+2. History of syncope (fainting)
+3. Documented ventricular arrhythmia
+4. Family history of sudden cardiac death
 
 ---
 
@@ -74,46 +74,46 @@ Sistem ini dilengkapi dengan **aplikasi web interaktif berbasis Streamlit** yang
 
 **Dataset:** Brugada-HUCA v1.0.0
 
-| Parameter | Nilai |
+| Parameter | Value |
 |-----------|-------|
-| Total Subjek | 363 individu |
+| Total Subjects | 363 individuals |
 | Sampling Rate | 100 Hz |
-| Durasi Rekaman | 12 detik (1200 sampel) |
-| Jumlah Lead | 12 lead EKG standar |
+| Recording Duration | 12 seconds (1200 samples) |
+| Number of Leads | 12 standard ECG leads |
 | Format | WFDB (.dat + .hea) |
 
-### Distribusi Kelas
-| Kelas | Jumlah | Persentase |
+### Class Distribution
+| Class | Count | Percentage |
 |-------|--------|------------|
 | Normal (brugada=0) | 287 | 79.1% |
 | Brugada (brugada>0) | 76 | 20.9% |
 
-### Variabel Klinis (metadata.csv)
-| Variabel | Deskripsi |
-|----------|-----------|
-| `patient_id` | ID unik pasien |
-| `basal_pattern` | Pola EKG baseline patologis (0/1) |
-| `sudden_death` | Variabel outcome kematian mendadak (0/1) |
-| `brugada` | Label diagnosis: 0=Normal, 1=Brugada, 2=Atipikal |
+### Clinical Variables (metadata.csv)
+| Variable | Description |
+|----------|-------------|
+| `patient_id` | Unique patient ID |
+| `basal_pattern` | Pathological baseline ECG pattern (0/1) |
+| `sudden_death` | Sudden death outcome variable (0/1) |
+| `brugada` | Diagnosis label: 0=Normal, 1=Brugada, 2=Atypical |
 
 ---
 
-## 🧠 Arsitektur Model
+## 🧠 Model Architecture
 
 ### Model 1 & 2 — XGBoost (Classical ML)
 
-Menggunakan **feature engineering** manual untuk mengekstrak fitur klinis dari sinyal EKG.
+Uses manual **feature engineering** to extract clinical features from ECG signals.
 
 | | Model 1 (Clinical) | Model 2 (Full) |
 |---|---|---|
-| **Jumlah Fitur** | 413 | 545 |
-| **Fitur** | Statistik + QRS + ST + T-wave + RR | Statistik + QRS + ST + T-wave + **PR + QT** + RR |
+| **Number of Features** | 413 | 545 |
+| **Features** | Statistics + QRS + ST + T-wave + RR | Statistics + QRS + ST + T-wave + **PR + QT** + RR |
 | **Target** | Best F1 Score | Best Recall |
 | **Scaler** | MinMaxScaler | MinMaxScaler |
 | **Tuning** | GridSearchCV (5-Fold) | GridSearchCV (5-Fold) |
 
-**Detail fitur per lead (12 lead):**
-- **Statistik (11):** mean, std, min, max, range, skew, kurtosis, RMS, energy, dominant frequency, total power
+**Feature details per lead (12 leads):**
+- **Statistics (11):** mean, std, min, max, range, skew, kurtosis, RMS, energy, dominant frequency, total power
 - **QRS (9):** duration, amplitude, R/S ratio (mean, std, max, min)
 - **ST-segment (9):** elevation, slope, area (mean, std, max, min)
 - **T-wave (5):** amplitude, area, inversion (mean, std, count)
@@ -123,7 +123,7 @@ Menggunakan **feature engineering** manual untuk mengekstrak fitur klinis dari s
 
 ### Model 3 & 4 — CNN 1D (Deep Learning)
 
-Menggunakan sinyal EKG **mentah** (setelah filtering & normalisasi) tanpa feature engineering manual.
+Uses **raw** ECG signals (after filtering & normalization) without manual feature engineering.
 
 ```
 Input: (batch, 12, 1200) — 12 leads × 1200 samples
@@ -136,11 +136,11 @@ Block 4: Conv1d(256→256, k=3) → BatchNorm → ReLU → AdaptiveAvgPool1d(1)
 Classifier: Flatten → Linear(256,128) → ReLU → Dropout(0.5) → Linear(128,1) → Sigmoid
 ```
 
-| | CNN 1D | CNN 1D + Augmentasi |
+| | CNN 1D | CNN 1D + Augmentation |
 |---|---|---|
-| **Input** | Raw ECG Signal (filtered + normalized) | Raw ECG + Augmentasi kelas minoritas |
-| **Parameter** | ~500.000 | ~500.000 |
-| **Augmentasi** | — | Gaussian noise, amplitude scaling, time shift, baseline wander |
+| **Input** | Raw ECG Signal (filtered + normalized) | Raw ECG + Minority class augmentation |
+| **Parameters** | ~500,000 | ~500,000 |
+| **Augmentation** | — | Gaussian noise, amplitude scaling, time shift, baseline wander |
 | **Loss** | BCEWithLogitsLoss (weighted) | BCEWithLogitsLoss (weighted) |
 | **Optimizer** | Adam (lr=1e-3, wd=1e-4) | Adam (lr=1e-3, wd=1e-4) |
 | **Scheduler** | ReduceLROnPlateau | ReduceLROnPlateau |
@@ -148,11 +148,11 @@ Classifier: Flatten → Linear(256,128) → ReLU → Dropout(0.5) → Linear(128
 ### Preprocessing Pipeline
 1. **Bandpass Filter:** 0.5–40 Hz (Butterworth, order 4)
 2. **Min-Max Normalization** per lead
-3. **Transpose** ke format (channels, length) untuk CNN
+3. **Transpose** to (channels, length) format for CNN
 
 ---
 
-## 📈 Hasil & Performa
+## 📈 Results & Performance
 
 ### Test Set (80/20 split, stratified)
 
@@ -161,7 +161,7 @@ Classifier: Flatten → Linear(256,128) → ReLU → Dropout(0.5) → Linear(128
 | XGBoost Clinical | 0.8667 | 0.7429 | 0.9034 |
 | XGBoost Full | 0.9333 | 0.6512 | 0.9069 |
 | CNN 1D | 0.80 | 0.8966 | 0.9351 |
-| **CNN 1D + Augmentasi** | **0.93** | **0.9655** | **0.9420** |
+| **CNN 1D + Augmentation** | **0.93** | **0.9655** | **0.9420** |
 
 ### K-Fold Cross Validation (5 fold)
 
@@ -176,49 +176,49 @@ Classifier: Flatten → Linear(256,128) → ReLU → Dropout(0.5) → Linear(128
 
 ---
 
-## 📁 Struktur File
+## 📁 File Structure
 
 ```
 BrugadaAI/
 ├── app.py                          # 🌐 Streamlit web application
-├── export_models.py                # 📦 Script untuk export model dari notebook
+├── export_models.py                # 📦 Script to export models from notebooks
 ├── requirements.txt                # 📋 Dependencies
-├── README.md                       # 📖 Dokumentasi (file ini)
+├── README.md                       # 📖 Documentation (this file)
 │
 ├── BRUGADA_CNN-collab.ipynb        # 🧠 Notebook: CNN 1D model (training & evaluation)
 ├── BRUGADA-Classical-Models.ipynb  # 🌲 Notebook: XGBoost model (training & evaluation)
 ├── Benchmark_Model_Notebook.ipynb  # 📊 Notebook: Benchmark reference
 │
-├── models/                         # 💾 Model terlatih (hasil export)
+├── models/                         # 💾 Trained models (exported)
 │   ├── cnn_models.pth              #     CNN 1D & CNN 1D+Aug (PyTorch)
 │   └── xgboost_models.pkl          #     XGBoost Clinical & Full (joblib)
 │
-├── metadata.csv                    # 📋 Data klinis pasien
-├── metadata_dictionary.csv         # 📖 Kamus variabel metadata
-├── RECORDS                         # 📝 Daftar patient ID
+├── metadata.csv                    # 📋 Patient clinical data
+├── metadata_dictionary.csv         # 📖 Metadata variable dictionary
+├── RECORDS                         # 📝 Patient ID list
 │
-├── files/                          # 📂 Data EKG per pasien (WFDB format)
+├── files/                          # 📂 Per-patient ECG data (WFDB format)
 │   ├── 188981/
-│   │   ├── 188981.dat              #     Sinyal EKG (binary)
-│   │   └── 188981.hea              #     Header metadata rekaman
+│   │   ├── 188981.dat              #     ECG signal (binary)
+│   │   └── 188981.hea              #     Recording header metadata
 │   ├── 251972/
 │   │   ├── 251972.dat
 │   │   └── 251972.hea
-│   └── ... (363 pasien)
+│   └── ... (363 patients)
 │
-├── cnn1d_results.png               # 📊 Hasil visualisasi CNN
-├── cnn1d_aug_results.png           # 📊 Hasil visualisasi CNN + Augmentasi
-├── model1_clinical_results.png     # 📊 Hasil visualisasi XGBoost Clinical
-├── model2_full_results.png         # 📊 Hasil visualisasi XGBoost Full
-├── model_comparison_roc.png        # 📊 ROC curve perbandingan model
+├── cnn1d_results.png               # 📊 CNN visualization results
+├── cnn1d_aug_results.png           # 📊 CNN + Augmentation visualization results
+├── model1_clinical_results.png     # 📊 XGBoost Clinical visualization results
+├── model2_full_results.png         # 📊 XGBoost Full visualization results
+├── model_comparison_roc.png        # 📊 Model comparison ROC curve
 │
-├── LICENSE.txt                     # ⚖️ Lisensi
-└── SHA256SUMS.txt                  # 🔒 Checksum file
+├── LICENSE.txt                     # ⚖️ License
+└── SHA256SUMS.txt                  # 🔒 File checksums
 ```
 
 ---
 
-## ⚙️ Instalasi & Setup
+## ⚙️ Installation & Setup
 
 ### 1. Clone Repository
 
@@ -227,7 +227,7 @@ git clone https://github.com/<username>/BrugadaAI.git
 cd BrugadaAI
 ```
 
-### 2. Buat Virtual Environment (opsional tapi direkomendasikan)
+### 2. Create Virtual Environment (optional but recommended)
 
 ```bash
 python -m venv venv
@@ -245,154 +245,154 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-**Dependencies utama:**
-| Package | Versi | Fungsi |
+**Key dependencies:**
+| Package | Version | Purpose |
 |---------|-------|--------|
 | streamlit | ≥1.30.0 | Web application framework |
 | torch | ≥2.0.0 | CNN 1D deep learning |
 | xgboost | ≥2.0.0 | Gradient boosting classifier |
-| wfdb | ≥4.1.0 | Baca format EKG WFDB |
-| plotly | ≥5.18.0 | Visualisasi interaktif |
+| wfdb | ≥4.1.0 | Read WFDB ECG format |
+| plotly | ≥5.18.0 | Interactive visualization |
 | scipy | ≥1.11.0 | Signal processing |
 | scikit-learn | ≥1.3.0 | Preprocessing & metrics |
 | pandas | ≥2.0.0 | Data manipulation |
 | numpy | ≥1.24.0 | Numerical computing |
 | joblib | ≥1.3.0 | Model serialization |
 
-### 4. Pastikan Model Sudah Ada
+### 4. Ensure Models Are Available
 
-Model terlatih harus berada di folder `models/`:
+Trained models must be in the `models/` folder:
 ```
 models/
 ├── cnn_models.pth        # CNN models (PyTorch)
 └── xgboost_models.pkl    # XGBoost models (joblib)
 ```
 
-> Jika model belum ada, Anda perlu menjalankan notebook training terlebih dahulu (lihat bagian [Re-training Model](#re-training-model-opsional)).
+> If models are not available, you need to run the training notebooks first (see [Re-training Models](#re-training-models-optional)).
 
 ---
 
-## 🚀 Cara Menjalankan Streamlit
+## 🚀 Running the Streamlit App
 
 ```bash
 streamlit run app.py
 ```
 
-Aplikasi akan terbuka otomatis di browser pada `http://localhost:8501`.
+The application will automatically open in your browser at `http://localhost:8501`.
 
-Untuk menghentikan aplikasi, tekan `Ctrl+C` di terminal.
+To stop the application, press `Ctrl+C` in the terminal.
 
 ---
 
-## 📖 Panduan Penggunaan Streamlit
+## 📖 Streamlit Usage Guide
 
-Aplikasi BrugadaAI memiliki **5 halaman utama** yang dapat diakses melalui sidebar navigasi:
+The BrugadaAI application has **5 main pages** accessible through the sidebar navigation:
 
 ### 🏠 1. Dashboard
 
-Halaman utama menampilkan:
-- **Ringkasan dataset** — total pasien, jumlah normal vs. Brugada
-- **Status model** — model mana saja yang berhasil dimuat
-- **Pie chart** distribusi kelas
-- **Informasi sistem** dan parameter EKG
+The main page displays:
+- **Dataset summary** — total patients, normal vs. Brugada count
+- **Model status** — which models were successfully loaded
+- **Pie chart** of class distribution
+- **System information** and ECG parameters
 
-### 🔬 2. Analisis ECG (Halaman Utama)
+### 🔬 2. ECG Analysis (Main Page)
 
-Halaman ini adalah inti dari aplikasi. Cara menggunakannya:
+This is the core page of the application. How to use it:
 
-#### Langkah 1 — Pilih Sumber Data EKG
+#### Step 1 — Select ECG Data Source
 
-Ada 2 cara memasukkan data:
+There are 2 ways to input data:
 
-| Tab | Cara | Keterangan |
-|-----|------|------------|
-| **📤 Upload File WFDB** | Upload file `.hea` dan `.dat` | Untuk data EKG baru dari luar dataset |
-| **📂 Pilih dari Dataset** | Pilih patient ID dari dropdown | Untuk menguji dengan data yang sudah ada |
+| Tab | Method | Description |
+|-----|--------|-------------|
+| **📤 Upload WFDB File** | Upload `.hea` and `.dat` files | For new ECG data from outside the dataset |
+| **📂 Select from Dataset** | Choose patient ID from dropdown | To test with existing data |
 
-> **Catatan:** Saat upload, kedua file (.hea dan .dat) harus memiliki **nama yang sama** (contoh: `188981.hea` & `188981.dat`).
+> **Note:** When uploading, both files (.hea and .dat) must have the **same name** (e.g., `188981.hea` & `188981.dat`).
 
-#### Langkah 2 — Visualisasi EKG 12-Lead
+#### Step 2 — 12-Lead ECG Visualization
 
-Setelah data dimuat, sistem menampilkan:
-- **EKG 12-lead interaktif** — zoom, pan, hover untuk lihat detail
-- **3 mode tampilan:** Raw (asli), Filtered (setelah bandpass), Normalized (min-max)
-- **Detail per lead** — pilih lead spesifik (default: V1, V2, V3 karena paling relevan untuk Brugada)
-- **Deteksi R-Peak** — toggle untuk melihat lokasi puncak R
+After data is loaded, the system displays:
+- **Interactive 12-lead ECG** — zoom, pan, hover to see details
+- **3 display modes:** Raw (original), Filtered (after bandpass), Normalized (min-max)
+- **Per-lead detail** — select specific leads (default: V1, V2, V3 as most relevant for Brugada)
+- **R-Peak detection** — toggle to view R-peak locations
 
-#### Langkah 3 — Parameter EKG Otomatis
+#### Step 3 — Automatic ECG Parameters
 
-Sistem menghitung otomatis:
+The system automatically calculates:
 - Heart Rate (bpm)
-- RR Interval (mean, std, min, max) dalam milidetik
+- RR Interval (mean, std, min, max) in milliseconds
 
-#### Langkah 4 — Hasil Klasifikasi
+#### Step 4 — Classification Results
 
-Sistem menjalankan **semua model yang tersedia** dan menampilkan:
-- **Kartu hasil per model** — warna hijau (Normal) atau merah (Brugada)
-- **Probabilitas** dan **threshold** per model
-- **Ensemble result** — konsensus dari semua model:
-  - ✅ NORMAL — tidak ada indikasi
-  - ⚠️ WASPADA — sebagian model mendeteksi Brugada
-  - 🚨 POSITIF — semua model mendeteksi Brugada
-- **Ground truth** ditampilkan jika data dari dataset (untuk validasi)
+The system runs **all available models** and displays:
+- **Result card per model** — green (Normal) or red (Brugada)
+- **Probability** and **threshold** per model
+- **Ensemble result** — consensus from all models:
+  - ✅ NORMAL — no indication
+  - ⚠️ CAUTION — some models detected Brugada
+  - 🚨 POSITIVE — all models detected Brugada
+- **Ground truth** shown if data is from the dataset (for validation)
 
-#### Langkah 5 — Visualisasi Prediksi
+#### Step 5 — Prediction Visualization
 
-2 tab visualisasi:
-- **🎯 Risk Gauge** — meter risiko per model (hijau→kuning→merah)
-- **📊 Comparison** — bar chart perbandingan probabilitas antar model
+2 visualization tabs:
+- **🎯 Risk Gauge** — risk meter per model (green→yellow→red)
+- **📊 Comparison** — bar chart comparing probabilities across models
 
-#### Langkah 6 — Pengaturan Threshold (Opsional)
+#### Step 6 — Threshold Settings (Optional)
 
-Buka panel **⚙️ Pengaturan Threshold** untuk:
-- Menyesuaikan threshold klasifikasi per model dengan slider (0.0–1.0)
-- Threshold lebih rendah = lebih sensitif (lebih banyak deteksi positif)
-- Threshold lebih tinggi = lebih spesifik (lebih sedikit false positive)
+Open the **⚙️ Threshold Settings** panel to:
+- Adjust classification threshold per model with slider (0.0–1.0)
+- Lower threshold = more sensitive (more positive detections)
+- Higher threshold = more specific (fewer false positives)
 
-#### Langkah 7 — Download Laporan Klinis
+#### Step 7 — Download Clinical Report
 
-- **Preview** laporan sebelum download
-- **Download** sebagai file `.txt` yang berisi semua hasil klasifikasi dan disclaimer medis
+- **Preview** the report before downloading
+- **Download** as a `.txt` file containing all classification results and medical disclaimer
 
 ### 📂 3. Dataset Explorer
 
-Fitur eksplorasi dataset:
-- **Filter** berdasarkan: kelas (Normal/Brugada), basal pattern, sudden death
-- **Tabel data** lengkap dengan status per pasien
-- **Grafik distribusi** kelas dan grade Brugada
-- **Quick ECG Preview** — pilih pasien dan langsung lihat EKG-nya
-- **Batch Prediction** — jalankan prediksi pada 5–50 pasien sekaligus, dengan progress bar dan download CSV hasil
+Dataset exploration features:
+- **Filter** by: class (Normal/Brugada), basal pattern, sudden death
+- **Complete data table** with per-patient status
+- **Distribution charts** for class and Brugada grade
+- **Quick ECG Preview** — select a patient and instantly view their ECG
+- **Batch Prediction** — run predictions on 5–50 patients at once, with progress bar and CSV result download
 
-### 📊 4. Perbandingan Model
+### 📊 4. Model Comparison
 
-Halaman referensi yang menampilkan:
-- **Spesifikasi** lengkap tiap model (tipe, input, fitur)
-- **Arsitektur CNN** (diagram layer-by-layer)
-- **Pipeline fitur XGBoost** (detail setiap jenis fitur)
-- **Tabel performa** dari hasil training
-- **Bar chart** perbandingan F1, AUC-ROC, Recall
-- **Analisis Threshold Interaktif** — jalankan prediksi pada sampel data dan lihat kurva F1/Recall vs Threshold untuk setiap model
+Reference page displaying:
+- **Complete specifications** for each model (type, input, features)
+- **CNN architecture** (layer-by-layer diagram)
+- **XGBoost feature pipeline** (details for each feature type)
+- **Performance table** from training results
+- **Bar chart** comparing F1, AUC-ROC, Recall
+- **Interactive Threshold Analysis** — run predictions on sample data and view F1/Recall vs Threshold curves for each model
 
-### ℹ️ 5. Tentang
+### ℹ️ 5. About
 
-Informasi lengkap tentang:
-- Apa itu Sindrom Brugada (medis)
-- Detail teknis sistem BrugadaAI
-- Panduan penggunaan step-by-step
+Comprehensive information about:
+- What is Brugada Syndrome (medical)
+- Technical details of the BrugadaAI system
+- Step-by-step usage guide
 
 ---
 
-## Re-training Model (Opsional)
+## Re-training Models (Optional)
 
-Jika ingin melatih ulang model dari awal:
+If you want to retrain the models from scratch:
 
-### 1. Jalankan Notebook CNN
-Buka `BRUGADA_CNN-collab.ipynb` dan jalankan semua cell dari atas ke bawah. Cell terakhir akan meng-export model ke `models/cnn_models.pth`.
+### 1. Run the CNN Notebook
+Open `BRUGADA_CNN-collab.ipynb` and run all cells from top to bottom. The last cell will export the model to `models/cnn_models.pth`.
 
-### 2. Jalankan Notebook XGBoost
-Buka `BRUGADA-Classical-Models.ipynb` dan jalankan semua cell. Cell terakhir akan meng-export model ke `models/xgboost_models.pkl`.
+### 2. Run the XGBoost Notebook
+Open `BRUGADA-Classical-Models.ipynb` and run all cells. The last cell will export the model to `models/xgboost_models.pkl`.
 
-### 3. Verifikasi
+### 3. Verify
 ```bash
 ls models/
 # Output: cnn_models.pth  xgboost_models.pkl
@@ -400,24 +400,24 @@ ls models/
 
 ---
 
-## 🛠 Teknologi yang Digunakan
+## 🛠 Technologies Used
 
-| Kategori | Teknologi |
-|----------|-----------|
-| **Bahasa** | Python 3.10+ |
+| Category | Technology |
+|----------|------------|
+| **Language** | Python 3.10+ |
 | **Deep Learning** | PyTorch 2.x |
 | **Classical ML** | XGBoost 2.x, scikit-learn |
 | **Signal Processing** | SciPy (Butterworth filter, Welch PSD, peak detection) |
 | **ECG Data** | WFDB (WaveForm DataBase format) |
 | **Web App** | Streamlit |
-| **Visualisasi** | Plotly (interaktif), Matplotlib (notebook) |
+| **Visualization** | Plotly (interactive), Matplotlib (notebook) |
 | **Data** | Pandas, NumPy |
 
 ---
 
 ## ⚕️ Disclaimer
 
-> **PENTING:** Sistem BrugadaAI adalah **alat bantu skrining** berbasis kecerdasan buatan dan **BUKAN** pengganti diagnosis medis profesional. Hasil prediksi harus selalu dikonfirmasi oleh **dokter spesialis jantung (kardiolog)** yang berkualifikasi. Jangan mengambil keputusan medis hanya berdasarkan output dari sistem ini.
+> **IMPORTANT:** The BrugadaAI system is an AI-based **screening tool** and is **NOT** a substitute for professional medical diagnosis. Prediction results should always be confirmed by a qualified **cardiologist**. Do not make medical decisions based solely on the output of this system.
 
 ---
 
