@@ -160,8 +160,8 @@ Classifier: Flatten → Linear(256,128) → ReLU → Dropout(0.5) → Linear(128
 |-------|--------|----|---------|
 | XGBoost Clinical | 0.8667 | 0.7429 | 0.9034 |
 | XGBoost Full | 0.9333 | 0.6512 | 0.9069 |
-| **CNN 1D** | — | **0.8966** | **0.9351** |
-| CNN 1D + Augmentasi | — | — | — |
+| CNN 1D | 0.80 | 0.8966 | 0.9351 |
+| **CNN 1D + Augmentasi** | **0.93** | **0.9655** | **0.9420** |
 
 ### K-Fold Cross Validation (5 fold)
 
